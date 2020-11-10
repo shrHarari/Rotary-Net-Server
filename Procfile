@@ -1,1 +1,1 @@
-web: node ./server/rotary_net_server.js
+web: node rotary_net_server.js
