@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 /**
  * Module dependencies.
  */
 
 var app = require('./src/app');
 var http = require('http');
+
 
 /**
  * Get port from environment and store in Express.
