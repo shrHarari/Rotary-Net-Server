@@ -7,6 +7,10 @@ const { utilController } = require('../controllers');
 var uploadPersoncardImage = multer({ dest: 'PersonCardImages/' });
 
 /* GET utils listing. */
+router.get('/checkdb', utilController.checkDb);
+
+
+
 var cpUpload = uploadPersoncardImage.fields([{ name: 'personCardImage', maxCount: 1 }, { name: 'image', maxCount: 1 }])
 router.post('/uploadPersonCardImage', cpUpload, utilController.uploadPersoncardImage);
 // router.post('/uploadPersonCardImage', uploadPersoncardImage.single("picture"), utilController.uploadPersoncardImage);

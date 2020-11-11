@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/rotary', {
 // mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rotary', {
 
-var URL = process.env.MONGODB_URI || 'mongodb://localhost/rotary';
+var URL = process.env.MONGODB_ROTARY_URI || 'mongodb://localhost/rotary';
 
 mongoose.connect(URL, {
     useNewUrlParser: true,

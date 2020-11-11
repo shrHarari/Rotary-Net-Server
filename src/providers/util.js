@@ -1,6 +1,16 @@
 
 var fs = require('fs');
 
+const _checkDb = async () => {
+    try {
+        return ('DataBase Check: OK');
+    }
+    catch(ex) {
+        console.log(`DataBase Check Error. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _uploadPersoncardImage = async (personCardImageFile) => {
     try {
         var src = fs.createReadStream(personCardImageFile.path);
@@ -52,6 +62,10 @@ const _getPersoncardImageFile = async (personCardImageFile) => {
 };
 
 module.exports = {
+    
+    checkDb: () => {
+        return _checkDb();
+    },
     
     uploadPersoncardImage: (personCardImageFile) => {
         return _uploadPersoncardImage(personCardImageFile);

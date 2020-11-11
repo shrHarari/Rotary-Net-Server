@@ -2,6 +2,17 @@ const { utilProvider } = require('../providers');
 
 module.exports = {
     
+    checkDb: async (req, res) => {
+        try {
+            const retVal = await utilProvider.checkDb();
+            res.send(retVal);
+        }
+        catch(ex) {
+            console.log(`error in DataBase Check - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+    
     uploadPersoncardImage: async (req, res) => {
         try {
             const personCardImageFile = req.files['personCardImage'][0];
