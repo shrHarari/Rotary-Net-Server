@@ -14,8 +14,8 @@ const MONGODB_ROTARY_URI = 'mongodb+srv://adminMongoDbUser:adminPass@rotarynet.z
 
 const mongoose = require('mongoose');
 
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rotary', {
-mongoose.connect(MONGODB_ROTARY_URI || 'mongodb://localhost/rotary', {
+// mongoose.connect(MONGODB_ROTARY_URI || 'mongodb://localhost/rotary', {
+mongoose.connect(process.env.MONGODB_ROTARY_URI || 'mongodb://localhost/rotary', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     retryWrites: false});
