@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 
   // var URL = process.env.MONGODB_SAMPLE_URI || 'mongodb://localhost/rotary';
 
-  var URL_TEST = MONGODB_SAMPLE_URI || 'mongodb://localhost/rotary';
+  var URL_TEST = MONGODB_ROTARY_URI || 'mongodb://localhost/rotary';
 
 mongoose.connect(URL_TEST, {
     useNewUrlParser: true,
