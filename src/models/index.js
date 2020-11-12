@@ -8,6 +8,7 @@ const PersonCard = require('./personcard');
 const Event = require('./event');
 const Message = require('./message');
 const MenuPage = require('./menupage');
+const Comment = require('./comment');
 
 module.exports = {
     Role,
@@ -18,5 +19,6 @@ module.exports = {
     PersonCard,
     Event,
     Message,
-    MenuPage
+    MenuPage,
+    Comment
 };
