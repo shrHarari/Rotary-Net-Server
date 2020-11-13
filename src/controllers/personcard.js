@@ -71,6 +71,18 @@ module.exports = {
             res.status(500).send('error in server');
         }
     },
+
+    getPersonCardByIdRoleEnum: async (req, res) => {
+        try {
+            const { personCardId } = req.params; 
+            const personCard = await personCardProvider.getPersonCardByIdRoleEnum(personCardId);
+            res.send(personCard);
+        }
+        catch(ex) {
+            console.log(`error getting PersonCard By Id All Populated - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
     
     getPersonCardsListByName: async (req, res) => {
         try {

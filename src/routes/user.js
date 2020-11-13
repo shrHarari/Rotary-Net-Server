@@ -10,6 +10,7 @@ router.get('/firstName/:firstName/lastName/:lastName', userController.getUsersLi
 router.get('/query/:query', userController.getUsersListByQuery);
 router.post('/', userController.createUser);
 router.post('/login', userController.confirmUserByEmailAndPassword);
+router.post('/loginPopulated', userController.confirmUserByEmailAndPasswordPopulated);
 router.put('/:userId', userController.updateUser);
 router.delete('/:userId', userController.deleteUser);
 

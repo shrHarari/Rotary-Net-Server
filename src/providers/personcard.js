@@ -74,11 +74,18 @@ const _getPersonCardByIdPopulated = async (personCardId) => {
 const _getPersonCardByIdMessagePopulated = async (personCardId) => {
     try {
 
-        const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)});
+        // const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)})
+        // .populate({
+        //     path:'messages',
+        //     model:'Message',
+        //     populate:{
+        //         path:'composerId',
+        //         model:'PersonCard',
+        //     }
+        // })
 
-        // return personCard;
-
-        personCard.populate({
+        const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)})
+        .populate({
             path:'messages',
             model:'Message',
             populate:{
@@ -107,7 +114,7 @@ const _getPersonCardByIdMessagePopulated = async (personCardId) => {
                     }
                 ]
             }
-        })
+        });
 
         return personCard;
     }
@@ -144,6 +151,24 @@ const _getPersonCardByIdAllPopulated = async (personCardId) => {
                 path:'composerId',
                 model:'PersonCard',
             }
+        })
+
+        return personCard;
+    }
+    catch(ex) {
+        console.log(`cannot get PersonCard By Id All Populated from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
+const _getPersonCardByIdRoleEnum = async (personCardId) => {
+    try {
+
+        const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)})
+        .populate({
+            path:'roleId',
+            model:'Role',
+            select: '_id roleEnum roleName'
         })
 
         return personCard;
@@ -356,6 +381,10 @@ module.exports = {
 
     getPersonCardByIdAllPopulated: (personCardId) => {
         return _getPersonCardByIdAllPopulated(personCardId);
+    },
+
+    getPersonCardByIdRoleEnum: (personCardId) => {
+        return _getPersonCardByIdRoleEnum(personCardId);
     },
     
     getPersonCardsListByName: (firstName, lastName) => {

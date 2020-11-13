@@ -93,6 +93,22 @@ module.exports = {
         }
     },
 
+    confirmUserByEmailAndPasswordPopulated: async (req, res) => {
+        try {
+            const loginUser = req.body;
+
+            const connectedUser = await userProvider.confirmUserByEmailAndPasswordPopulated(
+                loginUser.email, 
+                loginUser.password);
+
+            res.send(connectedUser);
+        }
+        catch(ex) {
+            console.log(`error confirm User By EmailAndPassword Populated - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     updateUser: async (req, res) => {
         try {
             const { userId } = req.params;

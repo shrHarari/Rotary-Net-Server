@@ -105,6 +105,33 @@ const _confirmUserByEmailAndPassword = async (email, password) => {
     }
 };
 
+const _confirmUserByEmailAndPasswordPopulated = async (email, password) => {
+    try {
+        searchStr = {
+            $and: [
+                {email: email}, 
+                {password: password}
+            ]}
+            
+        const user = await User.findOne(searchStr)
+        .populate({
+            path:'personCardId',
+            model:'PersonCard',
+            populate:{
+                path:'roleId',
+                model:'Role',
+                select: '_id roleEnum roleName'
+            }
+        });
+
+        return user;
+    }
+    catch(ex) {
+        console.log(`cannot Confirm User By EmailAndPassword Populated in db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _updateUser = async (userId, user) => {
     try {
         const updatedUser = await User.findByIdAndUpdate({_id: userId}, user);
@@ -156,6 +183,10 @@ module.exports = {
 
     confirmUserByEmailAndPassword: (email, password) => {
         return _confirmUserByEmailAndPassword(email, password);
+    },
+
+    confirmUserByEmailAndPasswordPopulated: (email, password) => {
+        return _confirmUserByEmailAndPasswordPopulated(email, password);
     },
 
     updateUser: (userId, user) => {
