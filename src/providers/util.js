@@ -4,6 +4,8 @@ var aws = require('aws-sdk');
 
 aws.config.region = 'us-east-1';
 
+const S3_BUCKET_PERSON_CARD_IMAGES = process.env.S3_BUCKET_PERSON_CARD_IMAGES;
+
 const _checkDb = async () => {
     try {
         return ('DataBase Check: OK');
