@@ -39,8 +39,12 @@ module.exports = {
             const { fileName } = req.params;
             const { fileType } = req.params;
 
-            const retVal = await utilProvider.signS3(fileName, fileType);
-            res.send(retVal);
+            const returnData = await utilProvider.signS3(fileName, fileType);
+
+            res.write(JSON.stringify(returnData));
+            res.end();
+
+            res.send(returnData);
         }
         catch(ex) {
             console.log(`error in signS3 File to AWS - ${ex}`);
