@@ -15,6 +15,13 @@ var cpUpload = uploadPersoncardImage.fields([{ name: 'personCardImage', maxCount
 router.post('/uploadPersonCardImage', cpUpload, utilController.uploadPersoncardImage);
 // router.post('/uploadPersonCardImage', uploadPersoncardImage.single("picture"), utilController.uploadPersoncardImage);
 
+
+/// AWS Section:
+///==================
+router.get('/sign-s3/fileName/:fileName/fileType/:fileType', utilController.signS3);
+router.post('/uploadAwsPersonCardImage', cpUpload, utilController.uploadAwsPersoncardImage);
+
+
 router.delete('/deletePersonCardImage/:personCardImageFile', utilController.deletePersoncardImage);
 router.get('/:personCardImageFile', utilController.getPersoncardImageFile);
 

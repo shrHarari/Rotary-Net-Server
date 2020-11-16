@@ -6,6 +6,7 @@
     "start": "node ./rotary_net_server.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.792.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",

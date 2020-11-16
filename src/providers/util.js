@@ -1,5 +1,8 @@
 
 var fs = require('fs');
+var aws = require('aws-sdk');
+
+aws.config.region = 'us-east-1';
 
 const _checkDb = async () => {
     try {
@@ -12,6 +15,68 @@ const _checkDb = async () => {
 };
 
 const _uploadPersoncardImage = async (personCardImageFile) => {
+    try {
+        var src = fs.createReadStream(personCardImageFile.path);
+        var dest = fs.createWriteStream('PersonCardImages/' + personCardImageFile.originalname);
+
+        src.pipe(dest);
+
+        src.on('end', function() {
+            fs.unlinkSync(personCardImageFile.path);
+            console.log(">>> OK: Received " + personCardImageFile.originalname);
+            return('OK: Received: ' + personCardImageFile.originalname);
+        });
+
+        src.on('error', function(err) { 
+            return('Error: Something went wrong!'); 
+        });
+      
+        return true;
+    }
+    catch(ex) {
+        console.log(`Uploading File Error. ${ex}`);
+        return Promise.reject();
+    }
+};
+
+const _signS3 = async (fileName, fileType) => {
+    try {
+        console.log(">>> signS3 /// fileName: " + fileName + ' >>> fileType: ' + fileType);
+
+        const s3 = new aws.S3();
+        
+        const s3Params = {
+            Bucket: S3_BUCKET_PERSON_CARD_IMAGES,
+            Key: fileName,
+            Expires: 60,
+            ContentType: fileType,
+            ACL: 'public-read'
+        };
+        
+        s3.getSignedUrl('putObject', s3Params, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.end();
+            }
+
+            const returnData = {
+                signedRequest: data,
+                url: `https://${S3_BUCKET_PERSON_CARD_IMAGES}.s3.amazonaws.com/${fileName}`
+            };
+
+            res.write(JSON.stringify(returnData));
+            res.end();
+        });
+
+        return true;
+    }
+    catch(ex) {
+        console.log(`Uploading AWS File Error. ${ex}`);
+        return Promise.reject();
+    }
+};
+
+const _uploadAwsPersoncardImage = async (personCardImageFile) => {
     try {
         var src = fs.createReadStream(personCardImageFile.path);
         var dest = fs.createWriteStream('PersonCardImages/' + personCardImageFile.originalname);
@@ -69,6 +134,14 @@ module.exports = {
     
     uploadPersoncardImage: (personCardImageFile) => {
         return _uploadPersoncardImage(personCardImageFile);
+    },
+    
+    signS3: (fileName, fileType) => {
+        return _signS3(fileName, fileType);
+    },
+    
+    uploadAwsPersoncardImage: (personCardImageFile) => {
+        return _uploadAwsPersoncardImage(personCardImageFile);
     },
     
     deletePersoncardImage: (personCardImageFile) => {

@@ -16,7 +16,7 @@ module.exports = {
     uploadPersoncardImage: async (req, res) => {
         try {
             const personCardImageFile = req.files['personCardImage'][0];
-            console.log(">>> OK: personCard FILE " + personCardImageFile);
+            console.log(">>> OK: personCard FILE " + personCardImageFile.path);
 
             // const currentPersonCardImage = req.files['image'];
             // console.log(">>> OK: currentPersonCardImage " + currentPersonCardImage);
@@ -33,6 +33,33 @@ module.exports = {
             res.status(500).send('error in server');
         }
     },
+
+    signS3: async (req, res) => {
+        try {
+            const { fileName } = req.params;
+            const { fileType } = req.params;
+
+            const retVal = await utilProvider.signS3(fileName, fileType);
+            res.send(retVal);
+        }
+        catch(ex) {
+            console.log(`error in signS3 File to AWS - ${ex}`);
+            res.status(500).send('error in AWS server');
+        }
+    },
+
+    uploadAwsPersoncardImage: async (req, res) => {
+        try {
+            const personCardImageFile = req.files['personCardImage'][0];
+            const retVal = await utilProvider.uploadAwsPersoncardImage(personCardImageFile);
+            res.send(retVal);
+        }
+        catch(ex) {
+            console.log(`error in Upload File to AWS - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+    
     
     deletePersoncardImage: async (req, res) => {
         try {
