@@ -55,19 +55,17 @@ const _signS3 = async (fileName, fileType) => {
             ACL: 'public-read'
         };
         
-        const returnData;
         s3.getSignedUrl('putObject', s3Params, (err, data) => {
             if (err) {
-                returnData = 'Error: Something went wrong!'; 
+                return('Error: Something went wrong!'); 
             }
 
-            returnData = {
+            const returnData = {
                 signedRequest: data,
                 url: `https://${S3_BUCKET_PERSON_CARD_IMAGES}.s3.amazonaws.com/${fileName}`
             };
+            return returnData;
         });
-
-        return returnData;
     }
     catch(ex) {
         console.log(`Uploading AWS File Error. ${ex}`);
