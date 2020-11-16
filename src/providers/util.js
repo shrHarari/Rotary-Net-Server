@@ -70,7 +70,7 @@ const _signS3 = async (fileName, fileType) => {
             res.end();
         });
 
-        return true;
+        // return returnData;
     }
     catch(ex) {
         console.log(`Uploading AWS File Error. ${ex}`);
