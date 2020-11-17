@@ -19,6 +19,7 @@ router.post('/uploadPersonCardImage', cpUpload, utilController.uploadPersoncardI
 /// AWS Section:
 ///==================
 router.get('/sign-s3/fileName/:fileName/fileType/:fileType', utilController.signS3);
+router.get('/generatePreSignedUrl', utilController.generatePreSignedUrl);
 router.post('/uploadAwsPersonCardImage', cpUpload, utilController.uploadAwsPersoncardImage);
 
 

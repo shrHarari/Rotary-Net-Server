@@ -1,10 +1,10 @@
 
 var fs = require('fs');
-var aws = require('aws-sdk');
+const AWS = require('aws-sdk');
+const awsConfig = require("./config-aws");
+var bodyParser = require("body-parser");
 
-aws.config.region = 'us-east-1';
-
-const S3_BUCKET_PERSON_CARD_IMAGES = process.env.S3_BUCKET_PERSON_CARD_IMAGES;
+const S3_BUCKET_PERSON_CARD_IMAGES = process.env.S3_BUCKET_PERSON_CARD_IMAGES || 'rotary-net-person-card-images';
 
 const _checkDb = async () => {
     try {
@@ -44,9 +44,40 @@ const _uploadPersoncardImage = async (personCardImageFile) => {
 const _signS3 = async (fileName, fileType) => {
     try {
         console.log(">>> signS3 /// fileName: " + fileName + ' >>> fileType: ' + fileType);
-
-        const s3 = new aws.S3();
+        console.log(">>> S3_BUCKET_PERSON_CARD_IMAGES: " + S3_BUCKET_PERSON_CARD_IMAGES);
         
+        // AWS.config.region = 'us-east-1';
+        AWS.config.update({region: 'us-east-1'});
+        // AWS.config.update({region: 'REGION'});
+
+        AWS.config.getCredentials(function(err) {
+            if (err) console.log(err.stack);
+            // credentials not loaded
+            else {
+                console.log("Access key:", AWS.config.credentials.accessKeyId);
+                console.log("Secret Access Key:", AWS.config.credentials.secretAccessKey);
+            }
+        });
+
+        const s3 = new AWS.S3();
+        // s3 = new AWS.S3({apiVersion: '2006-03-01'});
+        const s3 = new AWS.S3({
+            accessKeyId: AWS.config.credentials.accessKeyId,
+            secretAccessKey: AWS.config.credentials.secretAccessKey,
+            region: awsConfig.region,
+            signatureVersion: "v4",
+            //   useAccelerateEndpoint: true
+        });
+        
+        // Call S3 to list the buckets
+        s3.listBuckets(function(err, data) {
+            if (err) {
+            console.log("Error", err);
+            } else {
+            console.log("Success", data.Buckets);
+            }
+        });
+
         const s3Params = {
             Bucket: S3_BUCKET_PERSON_CARD_IMAGES,
             Key: fileName,
@@ -64,6 +95,57 @@ const _signS3 = async (fileName, fileType) => {
                 signedRequest: data,
                 url: `https://${S3_BUCKET_PERSON_CARD_IMAGES}.s3.amazonaws.com/${fileName}`
             };
+            console.log(">>> returnData: " + returnData);
+            return returnData;
+        });
+    }
+    catch(ex) {
+        console.log(`Uploading AWS File Error. ${ex}`);
+        return Promise.reject();
+    }
+};
+
+
+const _generatePreSignedUrl = async (fileName, fileType) => {
+    try {
+    //     console.log(">>> generatePresignedUrl /// fileName: " + fileName + ' >>> fileType: ' + fileType);
+        console.log(">>> S3_BUCKET_PERSON_CARD_IMAGES: " + S3_BUCKET_PERSON_CARD_IMAGES);
+        
+        AWS.config.update({ region: awsConfig.region });
+
+        const s3 = new AWS.S3({
+            accessKeyId: awsConfig.accessKeyId,
+            secretAccessKey: awsConfig.secretAccessKey,
+            region: awsConfig.region,
+            signatureVersion: "v4",
+            //   useAccelerateEndpoint: true
+        });
+
+        const s3Params = {
+            Bucket: S3_BUCKET_PERSON_CARD_IMAGES,
+            Key: fileName,
+            Expires: 60,
+            ContentType: "image/" + fileType,
+            ACL: 'public-read'
+        };
+        
+        s3.getSignedUrl('putObject', s3Params, (err, data) => {
+            if (err) {
+                console.log(err);
+                const returnData = {
+                    success: false,
+                    message: "Error: Something went wrong!",
+                };
+                return(returnData); 
+            }
+
+            const returnData = {
+                success: true,
+                message: "Url generated",
+                uploadUrl: data,
+                downloadUrl: `https://${S3_BUCKET_PERSON_CARD_IMAGES}.s3.amazonaws.com/` + fileName,
+            };
+            console.log(">>> returnData: " + returnData);
             return returnData;
         });
     }
@@ -135,6 +217,10 @@ module.exports = {
     
     signS3: (fileName, fileType) => {
         return _signS3(fileName, fileType);
+    },
+    
+    generatePreSignedUrl: (fileName, fileType) => {
+        return _generatePreSignedUrl(fileName, fileType);
     },
     
     uploadAwsPersoncardImage: (personCardImageFile) => {

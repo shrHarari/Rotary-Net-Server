@@ -36,15 +36,40 @@ module.exports = {
 
     signS3: async (req, res) => {
         try {
-            const { fileName } = req.params;
-            const { fileType } = req.params;
+            const { fileName } = req.body.fileName;
+            const { fileType } = req.body.fileType;
 
             const returnData = await utilProvider.signS3(fileName, fileType);
 
-            res.write(JSON.stringify(returnData));
-            res.end();
+            console.log(">>> returnData: " + returnData);
+            // res.write(JSON.stringify(returnData));
+            // res.end();
 
             res.send(returnData);
+        }
+        catch(ex) {
+            console.log(`error in signS3 File to AWS - ${ex}`);
+            res.status(500).send('error in AWS server');
+        }
+    },
+
+    generatePreSignedUrl: async (req, res) => {
+        try {
+            const { fileName } = req.params;
+            const { fileType } = req.params;
+            if (fileType != ".jpg" && fileType != ".png" && fileType != ".jpeg") {
+              return res
+                .status(403)
+                .json({ success: false, message: "Image format invalid" });
+            }
+
+            const aFileType = fileType.substring(1, fileType.length);   // ["jgg" || "png" || "jpeg"]
+            console.log(">>> Controller / generatePresignedUrl /// fileName: " + fileName + ' >>> fileType: ' + aFileType);
+
+            const returnData = await utilProvider.generatePreSignedUrl(fileName, aFileType);
+
+            console.log(">>> returnData: " + returnData);
+            return res.status(201).json(returnData);
         }
         catch(ex) {
             console.log(`error in signS3 File to AWS - ${ex}`);
