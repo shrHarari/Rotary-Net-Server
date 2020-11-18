@@ -26,8 +26,8 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
         var returnData = undefined;
         const s3Params = {
             Bucket: S3_ROTARY_NET_BUCKET,
-            // Key: 'PersonCardImages/' + fileName,
-            Key: fileName,
+            Key: 'PersonCardImages/' + fileName,
+            // Key: fileName,
             Expires: 60,
             ContentType: "image/" + fileType,
             ACL: 'public-read'
@@ -46,7 +46,7 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
                     success: true,
                     message: "Url generated",
                     uploadBucketUrl: data,
-                    downloadImageUrl: `https://${S3_ROTARY_NET_BUCKET}.s3.amazonaws.com/${fileName}`
+                    downloadImageUrl: `https://${S3_ROTARY_NET_BUCKET}.s3.amazonaws.com/PersonCardImages/${fileName}`
                 };
             };
             preSignedUrlCallback(returnData);
