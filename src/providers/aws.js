@@ -26,7 +26,8 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
         var returnData = undefined;
         const s3Params = {
             Bucket: S3_ROTARY_NET_BUCKET,
-            Key: 'PersonCardImages/' + fileName,
+            // Key: 'PersonCardImages/' + fileName,
+            Key: fileName,
             Expires: 60,
             ContentType: "image/" + fileType,
             ACL: 'public-read'
