@@ -1,6 +1,6 @@
 
 # Rotary related
 
-./PersonCardImages/
-./src/services/config-aws-client.js
+/PersonCardImages/
+/src/services/config-aws-client.js
 .env

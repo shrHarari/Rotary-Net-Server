@@ -44,7 +44,7 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
                     success: true,
                     message: "Url generated",
                     uploadBucketUrl: data,
-                    downloadImageUrl: `https://${S3_BUCKET_PERSON_CARD_IMAGES}.s3.amazonaws.com/${fileName}`
+                    downloadImageUrl: `https://${S3_ROTARY_NET_BUCKET}.s3.amazonaws.com/${fileName}`
                 };
             };
             preSignedUrlCallback(returnData);
