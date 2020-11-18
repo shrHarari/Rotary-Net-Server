@@ -6,15 +6,16 @@ module.exports = {
         try {
             const fileName = req.body.fileName;
             const fileType = req.body.fileType;
+            const bucketFolderName = req.body.bucketFolderName;
             if (fileType != ".jpg" && fileType != ".png" && fileType != ".jpeg") {
               return res
                 .status(403)
                 .json({ success: false, message: "Image format invalid" });
             }
 
-            const aFileType = fileType.substring(1, fileType.length);   // ["jgg" || "png" || "jpeg"]
+            const aFileType = fileType.substring(1, fileType.length);   // ["jpg" || "png" || "jpeg"]
 
-            await awsProvider.generatePreSignedUrl(fileName, aFileType, function(preSignedUrlResponse)
+            await awsProvider.generatePreSignedUrl(fileName, aFileType, bucketFolderName, function(preSignedUrlResponse)
             {
                 return res.status(201).json(preSignedUrlResponse);
             });

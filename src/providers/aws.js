@@ -19,15 +19,18 @@ const s3 = new AWS.S3({
 });
 
 const S3_ROTARY_NET_BUCKET = process.env.S3_ROTARY_NET_BUCKET || 'rotary-net-bucket';
-// const S3_ROTARY_NET_BUCKET = process.env.S3_BUCKET_PERSON_CARD_IMAGES || 'rotary-net-person-card-images';
 
-const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) => {
+const _generatePreSignedUrl = async (fileName, fileType, bucketFolderName, preSignedUrlCallback) => {
     try {
         var returnData = undefined;
+        var folderName = '';
+
+        if (bucketFolderName != '') folderName = bucketFolderName + '/';
+
         const s3Params = {
             Bucket: S3_ROTARY_NET_BUCKET,
-            Key: 'PersonCardImages/' + fileName,
-            // Key: fileName,
+            // Key: 'PersonCardImages/' + fileName,
+            Key: folderName + fileName,
             Expires: 60,
             ContentType: "image/" + fileType,
             ACL: 'public-read'
@@ -44,9 +47,9 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
             else {
                 returnData = {
                     success: true,
-                    message: "Url generated",
+                    message: "Url Generated",
                     uploadBucketUrl: data,
-                    downloadImageUrl: `https://${S3_ROTARY_NET_BUCKET}.s3.amazonaws.com/PersonCardImages/${fileName}`
+                    downloadImageUrl: `https://${S3_ROTARY_NET_BUCKET}.s3.amazonaws.com/${folderName}${fileName}`
                 };
             };
             preSignedUrlCallback(returnData);
@@ -61,7 +64,7 @@ const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) =
 
 module.exports = {
     
-    generatePreSignedUrl: (fileName, fileType, preSignedUrlCallback) => {
-        return _generatePreSignedUrl(fileName, fileType, preSignedUrlCallback);
+    generatePreSignedUrl: (fileName, fileType, bucketFolderName, preSignedUrlCallback) => {
+        return _generatePreSignedUrl(fileName, fileType, bucketFolderName, preSignedUrlCallback);
     }
 }
