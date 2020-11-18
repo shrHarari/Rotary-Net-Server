@@ -18,15 +18,13 @@ const s3 = new AWS.S3({
     signatureVersion: "v4",
 });
 
-const S3_BUCKET_PERSON_CARD_IMAGES = process.env.S3_BUCKET_PERSON_CARD_IMAGES || 'rotary-net-person-card-images';
+const S3_ROTARY_NET_BUCKET = process.env.S3_ROTARY_NET_BUCKET || 'rotary-net-bucket';
 
 const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) => {
     try {
-        console.log(">>> generatePresignedUrl /// fileName: " + fileName + ' >>> fileType: ' + fileType);
-        
         var returnData = undefined;
         const s3Params = {
-            Bucket: S3_BUCKET_PERSON_CARD_IMAGES,
+            Bucket: S3_ROTARY_NET_BUCKET,
             Key: 'PersonCardImages/' + fileName,
             Expires: 60,
             ContentType: "image/" + fileType,
