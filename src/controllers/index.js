@@ -9,6 +9,7 @@ const eventController = require('./event')
 const messageController = require('./message')
 const menuPageController = require('./menupage')
 const utilController = require('./util')
+const awsController = require('./aws')
 const commentController = require('./comment')
 
 module.exports = {
@@ -22,5 +23,6 @@ module.exports = {
     messageController,
     menuPageController,
     utilController,
+    awsController,
     commentController
 };

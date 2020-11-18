@@ -11,6 +11,7 @@ const eventRoute = require('./event');
 const messageRoute = require('./message');
 const menuPageRoute = require('./menupage');
 const utilRoute = require('./util');
+const awsRoute = require('./aws');
 const commentRoute = require('./comment');
 
 app.use('/role', roleRoute );
@@ -23,6 +24,7 @@ app.use('/event', eventRoute );
 app.use('/message', messageRoute );
 app.use('/menupage', menuPageRoute );
 app.use('/util', utilRoute );
+app.use('/aws', awsRoute );
 app.use('/comment', commentRoute );
 
 module.exports = app;
