@@ -18,7 +18,8 @@ const s3 = new AWS.S3({
     signatureVersion: "v4",
 });
 
-const S3_ROTARY_NET_BUCKET = process.env.S3_ROTARY_NET_BUCKET || 'rotary-net-bucket';
+// const S3_ROTARY_NET_BUCKET = process.env.S3_ROTARY_NET_BUCKET || 'rotary-net-bucket';
+const S3_ROTARY_NET_BUCKET = process.env.S3_BUCKET_PERSON_CARD_IMAGES || 'rotary-net-person-card-images';
 
 const _generatePreSignedUrl = async (fileName, fileType, preSignedUrlCallback) => {
     try {
