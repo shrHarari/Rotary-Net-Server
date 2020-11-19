@@ -23,13 +23,12 @@ const S3_ROTARY_NET_BUCKET = process.env.S3_ROTARY_NET_BUCKET || 'rotary-net-buc
 const _generatePreSignedUrl = async (fileName, fileType, bucketFolderName, preSignedUrlCallback) => {
     try {
         var returnData = undefined;
-        var folderName = '';
+        var folderName = '';                // <--- PersonCardImages || EventImages || '<empty>'
 
         if (bucketFolderName != '') folderName = bucketFolderName + '/';
 
         const s3Params = {
             Bucket: S3_ROTARY_NET_BUCKET,
-            // Key: 'PersonCardImages/' + fileName,
             Key: folderName + fileName,
             Expires: 60,
             ContentType: "image/" + fileType,
