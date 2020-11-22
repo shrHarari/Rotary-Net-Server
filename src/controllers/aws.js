@@ -24,5 +24,20 @@ module.exports = {
             console.log(`error in Generate Pre Signed Url to AWS - ${ex}`);
             res.status(500).send('error in Generate Pre Signed Url to AWS Server');
         }
-    }
+    },
+
+    deleteFile: async (req, res) => {
+        try {
+            const fileName = req.body.fileName;
+            const bucketFolderName = req.body.bucketFolderName;
+            await awsProvider.deleteFile(fileName, bucketFolderName, function(deleteResponse)
+            {
+                return res.status(202).json(deleteResponse);
+            });
+        }
+        catch(ex) {
+            console.log(`error deleting AWS File - ${ex}`);
+            res.status(500).send('error in deleting File from AWS Server');
+        }
+    },
 }

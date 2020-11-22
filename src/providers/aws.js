@@ -42,8 +42,7 @@ const _generatePreSignedUrl = async (fileName, fileType, bucketFolderName, preSi
                     success: false,
                     message: "Error: Something went wrong! --->>> " + err,
                 };
-            }
-            else {
+            } else {
                 returnData = {
                     success: true,
                     message: "Url Generated",
@@ -61,9 +60,50 @@ const _generatePreSignedUrl = async (fileName, fileType, bucketFolderName, preSi
     }
 };
 
+const _deleteFile = async (fileName, bucketFolderName, deleteCallback) => {
+    try {
+        var returnData = undefined;
+        var folderName = '';                // <--- PersonCardImages || EventImages || '<empty>'
+
+        if (bucketFolderName != '') folderName = bucketFolderName + '/';
+        
+        const s3Params = {
+            Bucket: S3_ROTARY_NET_BUCKET,
+            Key: folderName + fileName,
+        };
+
+        s3.deleteObject(s3Params, (err, data) => {
+            if (err) {
+                console.log(err);
+                returnData = {
+                    success: false,
+                    message: "Error: Deleting File! --->>> " + err,
+                };
+            }
+            else {
+                returnData = {
+                    success: true,
+                    message: "File Deleted",
+                    deletedData: data,
+                };
+            };
+            deleteCallback(returnData);
+        });
+        return;
+    }
+    catch(ex) {
+        console.log(`Delete File from AWS Server Error. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 module.exports = {
     
     generatePreSignedUrl: (fileName, fileType, bucketFolderName, preSignedUrlCallback) => {
         return _generatePreSignedUrl(fileName, fileType, bucketFolderName, preSignedUrlCallback);
+    },
+    
+    deleteFile: (fileName, bucketFolderName, deleteCallback) => {
+        return _deleteFile(fileName, bucketFolderName, deleteCallback);
     }
 }
