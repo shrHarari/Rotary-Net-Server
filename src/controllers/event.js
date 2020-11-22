@@ -61,6 +61,19 @@ module.exports = {
         }
     },
 
+    updateEventImage: async (req, res) => {
+        try {
+            const { eventId } = req.params;
+            const eventImageUrl = req.body.eventImageUrl
+            const updatedEvent = await eventProvider.updateEventImage(eventId, eventImageUrl);
+            res.send(updatedEvent);
+        }
+        catch(ex) {
+            console.log(`error updating Event Image - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     deleteEvent: async (req, res) => {
         try {
             const { eventId } = req.params;

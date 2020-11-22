@@ -345,6 +345,22 @@ const _updatePersonCard = async (personCardId, personCard) => {
     }
 };
 
+const _updatePersonCardImage = async (personCardId, personCardImage) => {
+    try {
+        const updatedPersonCard = await PersonCard.findByIdAndUpdate(
+            {_id: personCardId}, 
+            {pictureUrl: personCardImage},
+            { new: true, useFindAndModify: false }
+        );
+        
+        return(updatedPersonCard);
+    }
+    catch(ex) {
+        console.log(`cannot update PersonCard Image in db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _deletePersonCard = async (personCardId) => {
     try {
         await PersonCard.deleteOne({
@@ -425,6 +441,10 @@ module.exports = {
 
     updatePersonCard: (personCardId, personCard) => {
         return _updatePersonCard(personCardId, personCard);
+    },
+
+    updatePersonCardImage: (personCardId, personCardImage) => {
+        return _updatePersonCardImage(personCardId, personCardImage);
     },
 
     deletePersonCard: (personCardId) => {

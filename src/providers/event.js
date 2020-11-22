@@ -64,6 +64,22 @@ const _updateEvent = async (eventId, event) => {
     }
 };
 
+const _updateEventImage = async (eventId, eventImageUrl) => {
+    try {
+        const updatedEvent = await Event.findByIdAndUpdate(
+            {_id: eventId}, 
+            {eventPictureUrl: eventImageUrl},
+            { new: true, useFindAndModify: false }
+        );
+        
+        return(updatedEvent);
+    }
+    catch(ex) {
+        console.log(`cannot update Event Image in db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _deleteEvent = async (eventId) => {
     try {
         await Event.deleteOne({
@@ -96,6 +112,10 @@ module.exports = {
 
     updateEvent: (eventId, event) => {
         return _updateEvent(eventId, event);
+    },
+
+    updateEventImage: (eventId, eventImageUrl) => {
+        return _updateEventImage(eventId, eventImageUrl);
     },
 
     deleteEvent: (eventId) => {

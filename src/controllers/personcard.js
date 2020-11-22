@@ -207,6 +207,19 @@ module.exports = {
         }
     },
 
+    updatePersonCardImage: async (req, res) => {
+        try {
+            const { personCardId } = req.params;
+            const personCardImage = req.body;
+            const updatedPersonCard = await personCardProvider.updatePersonCardImage(personCardId, personCardImage);
+            res.send(updatedPersonCard);
+        }
+        catch(ex) {
+            console.log(`error update PersonCard Image - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     deletePersonCard: async (req, res) => {
         try {
             const { personCardId } = req.params;

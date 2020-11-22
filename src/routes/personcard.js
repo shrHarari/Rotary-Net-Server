@@ -21,7 +21,10 @@ router.get('/roleHierarchyByClusterId/:clusterId', personCardController.getPerso
 router.get('/roleHierarchyByClubId/:clubId', personCardController.getPersonCardsListByRoleHierarchyClubId);
 
 router.post('/userId/:userId', personCardController.createPersonCard);
+
 router.put('/:personCardId', personCardController.updatePersonCard);
+router.put('/:personCardId/updateImage', personCardController.updatePersonCardImage);
+
 router.delete('/:personCardId', personCardController.deletePersonCard);
 
 module.exports = router;
