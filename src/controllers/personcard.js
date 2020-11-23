@@ -210,8 +210,8 @@ module.exports = {
     updatePersonCardImage: async (req, res) => {
         try {
             const { personCardId } = req.params;
-            const personCardImage = req.body;
-            const updatedPersonCard = await personCardProvider.updatePersonCardImage(personCardId, personCardImage);
+            const personCardImageUrl = req.body.personCardImageUrl;
+            const updatedPersonCard = await personCardProvider.updatePersonCardImage(personCardId, personCardImageUrl);
             res.send(updatedPersonCard);
         }
         catch(ex) {

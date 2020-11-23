@@ -345,18 +345,18 @@ const _updatePersonCard = async (personCardId, personCard) => {
     }
 };
 
-const _updatePersonCardImage = async (personCardId, personCardImage) => {
+const _updatePersonCardImage = async (personCardId, personCardImageUrl) => {
     try {
         const updatedPersonCard = await PersonCard.findByIdAndUpdate(
             {_id: personCardId}, 
-            {pictureUrl: personCardImage},
+            {pictureUrl: personCardImageUrl},
             { new: true, useFindAndModify: false }
         );
         
         return(updatedPersonCard);
     }
     catch(ex) {
-        console.log(`cannot update PersonCard Image in db. ${ex}`);
+        console.log(`cannot update PersonCard Image Url in db. ${ex}`);
         return Promise.reject();
     }
 };
@@ -443,8 +443,8 @@ module.exports = {
         return _updatePersonCard(personCardId, personCard);
     },
 
-    updatePersonCardImage: (personCardId, personCardImage) => {
-        return _updatePersonCardImage(personCardId, personCardImage);
+    updatePersonCardImage: (personCardId, personCardImageUrl) => {
+        return _updatePersonCardImage(personCardId, personCardImageUrl);
     },
 
     deletePersonCard: (personCardId) => {
