@@ -75,10 +75,7 @@ const _getUsersListByQuery = async (query) => {
 const _createUser = async (user) => {
     try {
         const newUser = new User(user);
-        // await newUser.save(function(err, createdUser){
-        //     // console.log(createdUser);
-        //     return createdUser;
-        // });
+        
         const createdUser = await newUser.save();
         return createdUser;
     }

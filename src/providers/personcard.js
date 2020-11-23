@@ -313,15 +313,15 @@ const _createPersonCard = async (userId, personCard) => {
     try {
         const newPersonCard = new PersonCard(personCard);
         
-        return newPersonCard.save().then( docPersonCard => {
+        const savedPersonCard = await  newPersonCard.save();
 
-            return User.findByIdAndUpdate(
+        User.findByIdAndUpdate(
                 userId,
-                { personCardId: docPersonCard._id },
-                { new: true, useFindAndModify: true }
-                // { new: true, useFindAndModify: false }
-            );
-        });
+                { personCardId: savedPersonCard._id },
+                { new: true, useFindAndModify: false }
+            ).exec();
+        
+        return savedPersonCard;
     }
     catch(ex) {
         console.log(`cannot create PersonCard in db. ${ex}`);
