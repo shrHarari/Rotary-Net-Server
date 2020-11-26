@@ -15,11 +15,23 @@ module.exports = {
     getEventById: async (req, res) => {
         try {
             const { eventId } = req.params; 
-            const event = await eventProvider.geEventById(eventId);
+            const event = await eventProvider.getEventById(eventId);
             res.send(event);
         }
         catch(ex) {
-            console.log(`error getting Event By Id- ${ex}`);
+            console.log(`error getting Event By Id - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
+    getEventByIdPopulated: async (req, res) => {
+        try {
+            const { eventId } = req.params; 
+            const event = await eventProvider.getEventByIdPopulated(eventId);
+            res.send(event);
+        }
+        catch(ex) {
+            console.log(`error getting Event By Id Populated - ${ex}`);
             res.status(500).send('error in server');
         }
     },

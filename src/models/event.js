@@ -8,7 +8,8 @@ const eventSchema = new mongoose.Schema({
     eventStartDateTime: { type: Date },
     eventEndDateTime: { type: Date },
     eventLocation: { type: String },
-    eventManager: { type: String }
+    eventManager: { type: String },
+    eventComposerId: { type: mongoose.Schema.Types.ObjectId, ref: "PersonCard" },
 });
 
 const Event = mongoose.model('Event', eventSchema);

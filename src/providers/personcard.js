@@ -84,7 +84,9 @@ const _getPersonCardByIdMessagePopulated = async (personCardId) => {
         //     }
         // })
 
-        const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)})
+        const personCard = await PersonCard.findOne({
+            _id: mongoose.Types.ObjectId(personCardId)
+        })
         .populate({
             path:'messages',
             model:'Message',

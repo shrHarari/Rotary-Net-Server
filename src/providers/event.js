@@ -26,6 +26,23 @@ const _getEventById = async (eventId) => {
     }
 };
 
+const _getEventByIdPopulated = async (eventId) => {
+    try {
+        const event = await Event.findOne({
+            _id: mongoose.Types.ObjectId(eventId)
+        })
+        .populate({
+            path: 'eventComposerId',
+            model:'PersonCard',
+        });
+        return event;
+    }
+    catch(ex) {
+        console.log(`cannot get Event By Id Populated from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _getEventsListByQuery = async (query) => {
     try {
         searchStr = {eventName: {$regex: query, $options: 'ig'}}; 
@@ -100,6 +117,10 @@ module.exports = {
 
     getEventById: (eventId) => {
         return _getEventById(eventId);
+    },
+
+    getEventByIdPopulated: (eventId) => {
+        return _getEventByIdPopulated(eventId);
     },
     
     getEventsListByQuery: (query) => {
