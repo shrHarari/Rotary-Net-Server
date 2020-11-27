@@ -9,7 +9,7 @@ router.get('/personCardId/:personCardId', personCardController.getPersonCardById
 router.get('/personCardId/:personCardId/populated', personCardController.getPersonCardByIdPopulated);
 router.get('/personCardId/:personCardId/message_populated', personCardController.getPersonCardByIdMessagePopulated);
 router.get('/personCardId/:personCardId/all_populated', personCardController.getPersonCardByIdAllPopulated);
-router.get('/personCardId/:personCardId/roleEnum', personCardController.getPersonCardByIdRoleEnum);
+router.get('/personCardId/:personCardId/connectedData', personCardController.getPersonCardByIdConnectedData);
 router.get('/firstName/:firstName/lastName/:lastName', personCardController.getPersonCardsListByName);
 router.get('/firstName/:firstName/lastName/:lastName/populated', personCardController.getPersonCardsListByNamePopulated);
 router.get('/query/:query', personCardController.getPersonCardsListByQuery);

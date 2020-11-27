@@ -72,10 +72,10 @@ module.exports = {
         }
     },
 
-    getPersonCardByIdRoleEnum: async (req, res) => {
+    getPersonCardByIdConnectedData: async (req, res) => {
         try {
             const { personCardId } = req.params; 
-            const personCard = await personCardProvider.getPersonCardByIdRoleEnum(personCardId);
+            const personCard = await personCardProvider.getPersonCardByIdConnectedData(personCardId);
             res.send(personCard);
         }
         catch(ex) {

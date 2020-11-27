@@ -152,7 +152,7 @@ const _getPersonCardByIdAllPopulated = async (personCardId) => {
     }
 };
 
-const _getPersonCardByIdRoleEnum = async (personCardId) => {
+const _getPersonCardByIdConnectedData = async (personCardId) => {
     try {
 
         const personCard = await PersonCard.findOne({_id: mongoose.Types.ObjectId(personCardId)})
@@ -390,8 +390,8 @@ module.exports = {
         return _getPersonCardByIdAllPopulated(personCardId);
     },
 
-    getPersonCardByIdRoleEnum: (personCardId) => {
-        return _getPersonCardByIdRoleEnum(personCardId);
+    getPersonCardByIdConnectedData: (personCardId) => {
+        return _getPersonCardByIdConnectedData(personCardId);
     },
     
     getPersonCardsListByName: (firstName, lastName) => {
