@@ -48,6 +48,18 @@ module.exports = {
         }
     },
 
+    getEventsListByQueryPopulated: async (req, res) => {
+        try {
+            const { query } = req.params; 
+            const events = await eventProvider.getEventsListByQueryPopulated(query);
+            res.send(events);
+        }
+        catch(ex) {
+            console.log(`error getting Events List By Query - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     createEvent: async (req, res) => {
         try {
             const event = req.body;

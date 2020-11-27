@@ -34,6 +34,28 @@ const _getEventByIdPopulated = async (eventId) => {
         .populate({
             path: 'eventComposerId',
             model:'PersonCard',
+            populate: [
+                {
+                    path:'areaId',
+                    model:'Area',
+                    select: '_id areaName'
+                },
+                {
+                    path:'clusterId',
+                    model:'Cluster',
+                    select: '_id clusterName'
+                },
+                {
+                    path:'clubId',
+                    model:'Club',
+                    select: '_id clubName clubAddress clubMail clubManagerGuidId'
+                },
+                {
+                    path:'roleId',
+                    model:'Role',
+                    select: '_id roleEnum roleName'
+                }
+            ]
         });
         return event;
     }
@@ -48,6 +70,45 @@ const _getEventsListByQuery = async (query) => {
         searchStr = {eventName: {$regex: query, $options: 'ig'}}; 
 
         const events = await Event.find(searchStr).lean().exec();
+        return events;
+    }
+    catch(ex) {
+        console.log(`cannot get Events By Query from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
+const _getEventsListByQueryPopulated = async (query) => {
+    try {
+        searchStr = {eventName: {$regex: query, $options: 'ig'}}; 
+
+        const events = await Event.find(searchStr)
+        .populate({
+            path: 'eventComposerId',
+            model:'PersonCard',
+            populate: [
+                {
+                    path:'areaId',
+                    model:'Area',
+                    select: '_id areaName'
+                },
+                {
+                    path:'clusterId',
+                    model:'Cluster',
+                    select: '_id clusterName'
+                },
+                {
+                    path:'clubId',
+                    model:'Club',
+                    select: '_id clubName clubAddress clubMail clubManagerGuidId'
+                },
+                {
+                    path:'roleId',
+                    model:'Role',
+                    select: '_id roleEnum roleName'
+                }
+            ]
+        });
         return events;
     }
     catch(ex) {
@@ -125,6 +186,10 @@ module.exports = {
     
     getEventsListByQuery: (query) => {
         return _getEventsListByQuery(query);
+    },
+    
+    getEventsListByQueryPopulated: (query) => {
+        return _getEventsListByQueryPopulated(query);
     },
 
     createEvent: (event) => {

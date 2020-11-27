@@ -7,6 +7,7 @@ router.get('/', eventController.getEventsList);
 router.get('/:eventId', eventController.getEventById);
 router.get('/:eventId/populated', eventController.getEventByIdPopulated);
 router.get('/query/:query', eventController.getEventsListByQuery);
+router.get('/query/:query/populated', eventController.getEventsListByQueryPopulated);
 
 router.post('/', eventController.createEvent);
 
