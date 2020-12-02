@@ -173,7 +173,7 @@ module.exports = {
         try {
             const { clubId } = req.params; 
             const personCards = await personCardProvider.getPersonCardsListByRoleHierarchyClubId(clubId);
-            res.send(personCard);
+            res.send(personCards);
         }
         catch(ex) {
             console.log(`error getting PersonCards List By Role Hierarchy ClubId - ${ex}`);
