@@ -11,6 +11,7 @@ const menuPageController = require('./menupage')
 const utilController = require('./util')
 const awsController = require('./aws')
 const commentController = require('./comment')
+const heroController = require('./hero')
 
 module.exports = {
     roleController,
@@ -24,5 +25,6 @@ module.exports = {
     menuPageController,
     utilController,
     awsController,
-    commentController
+    commentController,
+    heroController
 };

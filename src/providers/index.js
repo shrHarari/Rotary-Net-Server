@@ -11,6 +11,7 @@ const menuPageProvider = require('./menupage');
 const utilProvider = require('./util');
 const awsProvider = require('./aws');
 const commentProvider = require('./comment');
+const heroProvider = require('./hero');
 
 module.exports = {
     roleProvider,
@@ -24,5 +25,6 @@ module.exports = {
     menuPageProvider,
     utilProvider,
     awsProvider,
-    commentProvider
+    commentProvider,
+    heroProvider
 };

@@ -9,6 +9,7 @@ const Event = require('./event');
 const Message = require('./message');
 const MenuPage = require('./menupage');
 const Comment = require('./comment');
+const Hero = require('./hero');
 
 module.exports = {
     Role,
@@ -20,5 +21,6 @@ module.exports = {
     Event,
     Message,
     MenuPage,
-    Comment
+    Comment,
+    Hero
 };

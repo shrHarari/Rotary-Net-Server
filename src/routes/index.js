@@ -13,6 +13,7 @@ const menuPageRoute = require('./menupage');
 const utilRoute = require('./util');
 const awsRoute = require('./aws');
 const commentRoute = require('./comment');
+const heroRoute = require('./hero');
 
 app.use('/role', roleRoute );
 app.use('/area', areaRoute );
@@ -26,5 +27,6 @@ app.use('/menupage', menuPageRoute );
 app.use('/util', utilRoute );
 app.use('/aws', awsRoute );
 app.use('/comment', commentRoute );
+app.use('/hero', heroRoute );
 
 module.exports = app;

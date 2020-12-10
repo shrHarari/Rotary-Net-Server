@@ -67,6 +67,19 @@ const _getClusterByIdWithClubs = async (clusterId) => {
 
 const _createCluster = async (areaId, cluster) => {
     try {
+
+        // const newCluster = new Cluster(cluster);
+        
+        // const savedCluster = await newCluster.save();
+
+        // Area.findByIdAndUpdate(
+        //     areaId,
+        //     { $push: { clusters: savedCluster._id } },
+        //     { new: true, useFindAndModify: false }
+        // );
+
+        // return savedCluster;
+
         const newCluster = new Cluster(cluster);
         
         return newCluster.save().then(docCluster => {
