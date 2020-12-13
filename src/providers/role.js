@@ -53,6 +53,22 @@ const _getRoleByRoleName = async (roleName) => {
     }
 };
 
+const _getRolesListByQuery = async (query) => {
+    try {
+        searchStr = {
+            $or: [
+                {name: {$regex: query, $options: 'ig'}}
+            ]}
+            
+        const roles = await Role.find(searchStr).lean().exec();
+        return roles;
+    }
+    catch(ex) {
+        console.log(`cannot get Roles List By Query from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _createRole = async (role) => {
     try {
         console.log(role);
@@ -107,6 +123,10 @@ module.exports = {
 
     getRoleByRoleName: (roleName) => {
         return _getRoleByRoleName(roleName);
+    },
+    
+    getRolesListByQuery: (query) => {
+        return _getRolesListByQuery(query);
     },
 
     createRole: (role) => {

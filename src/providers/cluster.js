@@ -54,6 +54,22 @@ const _getClusterByClusterName = async (clusterName) => {
     }
 };
 
+const _getClustersListByQuery = async (query) => {
+    try {
+        searchStr = {
+            $or: [
+                {name: {$regex: query, $options: 'ig'}}
+            ]}
+    
+        const clusters = await Cluster.find(searchStr).lean().exec();
+        return clusters;
+    }
+    catch(ex) {
+        console.log(`cannot get Clusters List By Query from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _getClusterByIdWithClubs = async (clusterId) => {
     try {
         const populatedCluster = await Cluster.findById(clusterId).populate("clubs");
@@ -139,6 +155,10 @@ module.exports = {
 
     getClusterByClusterName: (clusterName) => {
         return _getClusterByClusterName(clusterName);
+    },
+    
+    getClustersListByQuery: (query) => {
+        return _getClustersListByQuery(query);
     },
 
     getClusterByIdWithClubs: (clusterId) => {

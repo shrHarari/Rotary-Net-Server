@@ -48,6 +48,18 @@ module.exports = {
         }
     },
 
+    getClustersListByQuery: async (req, res) => {
+        try {
+            const { query } = req.params; 
+            const clusters = await clusterProvider.getClustersListByQuery(query);
+            res.send(clusters);
+        }
+        catch(ex) {
+            console.log(`error getting Clusters List By Query - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     getClusterByIdWithClubs: async (req, res) => {
         try {
             const { clusterId } = req.params; 

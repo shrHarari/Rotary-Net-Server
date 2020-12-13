@@ -7,8 +7,12 @@ router.get('/', roleController.getRolesList);
 router.get('/:roleId', roleController.getRoleById);
 router.get('/roleEnum/:roleEnum', roleController.getRoleByEnum);
 router.get('/roleName/:roleName', roleController.getRoleByRoleName);
+router.get('/query/:query', roleController.getRolesListByQuery);
+
 router.post('/', roleController.createRole);
+
 router.put('/:roleId', roleController.updateRole);
+
 router.delete('/:roleId', roleController.deleteRole);
 
 module.exports = router;

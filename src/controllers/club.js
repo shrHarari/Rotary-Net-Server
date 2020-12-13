@@ -37,6 +37,18 @@ module.exports = {
         }
     },
 
+    getClubsListByQuery: async (req, res) => {
+        try {
+            const { query } = req.params; 
+            const clubs = await clubProvider.getClubsListByQuery(query);
+            res.send(clubs);
+        }
+        catch(ex) {
+            console.log(`error getting Clubs List By Query - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     createClub: async (req, res) => {
         try {
             const { clusterId } = req.params; 

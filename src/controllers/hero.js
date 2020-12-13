@@ -28,8 +28,8 @@ module.exports = {
     getHeroesListByQuery: async (req, res) => {
         try {
             const { query } = req.params; 
-            const Heroes = await heroProvider.getHeroesListByQuery(query);
-            res.send(Heroes);
+            const heroes = await heroProvider.getHeroesListByQuery(query);
+            res.send(heroes);
         }
         catch(ex) {
             console.log(`error getting Heroes List By Query - ${ex}`);

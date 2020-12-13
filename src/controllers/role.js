@@ -49,6 +49,18 @@ module.exports = {
         }
     },
 
+    getRolesListByQuery: async (req, res) => {
+        try {
+            const { query } = req.params; 
+            const roles = await roleProvider.getRolesListByQuery(query);
+            res.send(roles);
+        }
+        catch(ex) {
+            console.log(`error getting Roles List By Query - ${ex}`);
+            res.status(500).send('error in server');
+        }
+    },
+
     createRole: async (req, res) => {
         try {
             const role = req.body;

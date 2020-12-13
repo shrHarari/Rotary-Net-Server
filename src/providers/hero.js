@@ -41,7 +41,6 @@ const _getHeroesListByQuery = async (query) => {
     }
 };
 
-
 const _createHero = async (hero) => {
     try {
         const newHero = new Hero(hero);

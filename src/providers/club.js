@@ -41,6 +41,22 @@ const _getClubByClubName = async (clubName) => {
     }
 };
 
+const _getClubsListByQuery = async (query) => {
+    try {
+        searchStr = {
+            $or: [
+                {name: {$regex: query, $options: 'ig'}}
+            ]}
+            
+        const clubs = await Club.find(searchStr).lean().exec();
+        return clubs;
+    }
+    catch(ex) {
+        console.log(`cannot get Clubs List By Query from db. ${ex}`);
+        return Promise.reject();
+    }
+};
+
 const _createClub = async (clusterId, club) => {
     try {
         const newClub = new Club(club);
@@ -98,6 +114,10 @@ module.exports = {
 
     getClubByClubName: (clubName) => {
         return _getClubByClubName(clubName);
+    },
+    
+    getClubsListByQuery: (query) => {
+        return _getClubsListByQuery(query);
     },
 
     createClub: (clusterId, club) => {
